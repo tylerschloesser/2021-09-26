@@ -44,14 +44,20 @@ let pointerTimeout: number | null = null
 
 let lastPointerEvent: PointerEvent | null = null
 let pointerEventCache: PointerEvent[] = []
+let pointerInMotion = false
+
 window.onpointermove = (e) => {
   if (pointerTimeout) {
     window.clearTimeout(pointerTimeout)
   }
+  if (!pointerInMotion) {
+    pointerEventCache = []
+  }
+  pointerInMotion = true
   lastPointerEvent = e
   pointerEventCache.push(e)
   pointerTimeout = window.setTimeout(() => {
-    pointerEventCache = []
+    pointerInMotion = false
   }, 100)
 }
 
