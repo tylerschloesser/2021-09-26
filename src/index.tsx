@@ -22,10 +22,15 @@ const mo = new MutationObserver((records) => {
 ReactDom.render(<App />, document.getElementById('app'))
 
 const canvas = document.querySelector('canvas')!
-const w = (canvas.width = window.innerWidth)
-const h = (canvas.height = window.innerHeight)
+let w = (canvas.width = window.innerWidth)
+let h = (canvas.height = window.innerHeight)
 
 const context = canvas.getContext('2d')!
+
+window.addEventListener('resize', () => {
+  w = canvas.width = window.innerWidth
+  h = canvas.height = window.innerHeight
+})
 
 const render = () => {
   context.clearRect(0, 0, w, h)
