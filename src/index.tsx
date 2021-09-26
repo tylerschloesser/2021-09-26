@@ -4,15 +4,11 @@ import { App } from './app'
 const beacons: Element[] = []
 
 const mo = new MutationObserver((records) => {
-  console.log(records)
-
   records.forEach((record) => {
     record.addedNodes.forEach((node) => {
-      console.log({ node })
       ;(node as HTMLElement)
         .querySelectorAll('[data-beacon]')
         .forEach((beacon) => {
-          console.log(beacon.getBoundingClientRect())
           beacons.push(beacon)
         })
     })
@@ -45,6 +41,7 @@ let pointerTimeout: number | null = null
 let lastPointerEvent: PointerEvent | null = null
 let pointerEventCache: PointerEvent[] = []
 let pointerInMotion = false
+let motionAngle: number | null = null
 
 window.onpointermove = (e) => {
   if (pointerTimeout) {
@@ -56,9 +53,36 @@ window.onpointermove = (e) => {
   pointerInMotion = true
   lastPointerEvent = e
   pointerEventCache.push(e)
+
+  if (pointerEventCache.length > 1) {
+    const first = pointerEventCache[0]
+    const last = pointerEventCache[pointerEventCache.length - 1]
+
+    motionAngle = Math.atan2(last.y - first.y, last.x - first.x)
+  }
+
   pointerTimeout = window.setTimeout(() => {
     pointerInMotion = false
   }, 100)
+}
+
+function renderMotionAngle(size: number) {
+  context.strokeStyle = '#222'
+  context.beginPath()
+  context.arc(size, size, size, 0, Math.PI * 2)
+
+  if (motionAngle) {
+    context.moveTo(size, size)
+
+    const x = size
+    const y = 0
+    context.lineTo(
+      size + Math.cos(motionAngle) * x - Math.sin(motionAngle) * y,
+      size + Math.sin(motionAngle) * x + Math.cos(motionAngle) * y,
+    )
+  }
+
+  context.stroke()
 }
 
 const render = () => {
@@ -93,6 +117,8 @@ const render = () => {
     context.arc(lastPointerEvent.x, lastPointerEvent.y, 10, 0, Math.PI * 2)
     context.stroke()
   }
+
+  renderMotionAngle(100)
 
   window.requestAnimationFrame(render)
 }
