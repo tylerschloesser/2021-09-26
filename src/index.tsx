@@ -1,4 +1,16 @@
-import React from 'react'
 import ReactDom from 'react-dom'
+import { css } from '@emotion/react'
 
-ReactDom.render(<h1>hi</h1>, document.getElementById('app'))
+function App() {
+  return (
+    <div
+      css={css`
+        color: pink;
+      `}
+    >
+      hi
+    </div>
+  )
+}
+
+ReactDom.render(<App />, document.getElementById('app'))

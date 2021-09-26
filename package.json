@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/tylerschloesser/2021-09-26#readme",
   "dependencies": {
+    "@emotion/react": "^11.4.1",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "@types/webpack-dev-server": "^4.1.0",
