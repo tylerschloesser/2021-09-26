@@ -32,13 +32,13 @@ const render = () => {
   context.fillStyle = 'rgba(0,0,0,.1)'
   context.fillRect(0, 0, w, h)
 
-  const beacon = beacons[0]
-  if (beacon) {
+  beacons.forEach((beacon) => {
     const rect = beacon.getBoundingClientRect()
-  }
+    context.strokeStyle = 'red'
+    context.strokeRect(rect.x, rect.y, rect.width, rect.height)
+  })
 
   window.requestAnimationFrame(render)
 }
 
-window.requestAnimationFrame(render)
 window.requestAnimationFrame(render)
