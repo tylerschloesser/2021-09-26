@@ -40,19 +40,20 @@ window.addEventListener('resize', () => {
   h = canvas.height = window.innerHeight
 })
 
+let pointerTimeout: number | null = null
+
 let lastPointerEvent: PointerEvent | null = null
 let pointerEventCache: PointerEvent[] = []
 window.onpointermove = (e) => {
+  if (pointerTimeout) {
+    window.clearTimeout(pointerTimeout)
+  }
   lastPointerEvent = e
   pointerEventCache.push(e)
+  pointerTimeout = window.setTimeout(() => {
+    pointerEventCache = []
+  }, 100)
 }
-
-setInterval(() => {
-  const now = performance.now()
-  const oneSecondAgo = now - 1000
-  const start = pointerEventCache.findIndex((e) => e.timeStamp > oneSecondAgo)
-  pointerEventCache = pointerEventCache.slice(start)
-}, 1000)
 
 const render = () => {
   context.clearRect(0, 0, w, h)
