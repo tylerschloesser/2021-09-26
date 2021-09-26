@@ -27,6 +27,14 @@ let h = (canvas.height = window.innerHeight)
 
 const context = canvas.getContext('2d')!
 
+let renderOverlay: boolean = true
+const toggleButton = document.querySelector(
+  'button#toggle',
+) as HTMLButtonElement
+toggleButton.onclick = () => {
+  renderOverlay = !renderOverlay
+}
+
 window.addEventListener('resize', () => {
   w = canvas.width = window.innerWidth
   h = canvas.height = window.innerHeight
@@ -34,6 +42,12 @@ window.addEventListener('resize', () => {
 
 const render = () => {
   context.clearRect(0, 0, w, h)
+
+  if (!renderOverlay) {
+    window.requestAnimationFrame(render)
+    return
+  }
+
   context.fillStyle = 'rgba(0,0,0,.1)'
   context.fillRect(0, 0, w, h)
 
