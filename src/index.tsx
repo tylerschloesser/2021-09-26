@@ -40,6 +40,11 @@ window.addEventListener('resize', () => {
   h = canvas.height = window.innerHeight
 })
 
+const pointerEventCache: PointerEvent[] = []
+window.onpointermove = (e) => {
+  pointerEventCache.push(e)
+}
+
 const render = () => {
   context.clearRect(0, 0, w, h)
 
@@ -56,6 +61,15 @@ const render = () => {
     context.strokeStyle = 'red'
     context.strokeRect(rect.x, rect.y, rect.width, rect.height)
   })
+
+  context.beginPath()
+  for (let i = 0; i < pointerEventCache.length - 2; i++) {
+    let a = pointerEventCache[i]
+    let b = pointerEventCache[i + 1]
+    context.moveTo(a.x, a.y)
+    context.lineTo(b.x, b.y)
+  }
+  context.stroke()
 
   window.requestAnimationFrame(render)
 }
