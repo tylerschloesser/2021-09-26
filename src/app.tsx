@@ -17,12 +17,12 @@ export function App() {
         `}
       >
         <div
-          data-beacon="a"
           css={css`
             padding: 10vmin;
           `}
         >
           <div
+            data-beacon="a"
             css={css`
               width: 33vmin;
               height: 33vmin;
