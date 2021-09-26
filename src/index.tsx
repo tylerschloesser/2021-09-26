@@ -40,8 +40,10 @@ window.addEventListener('resize', () => {
   h = canvas.height = window.innerHeight
 })
 
+let lastPointerEvent: PointerEvent | null = null
 let pointerEventCache: PointerEvent[] = []
 window.onpointermove = (e) => {
+  lastPointerEvent = e
   pointerEventCache.push(e)
 }
 
@@ -70,13 +72,20 @@ const render = () => {
   })
 
   context.beginPath()
-  for (let i = 0; i < pointerEventCache.length - 2; i++) {
+  for (let i = 0; i < pointerEventCache.length - 1; i++) {
     let a = pointerEventCache[i]
     let b = pointerEventCache[i + 1]
     context.moveTo(a.x, a.y)
     context.lineTo(b.x, b.y)
   }
+  context.strokeStyle = '#222'
   context.stroke()
+
+  if (lastPointerEvent) {
+    context.beginPath()
+    context.arc(lastPointerEvent.x, lastPointerEvent.y, 10, 0, Math.PI * 2)
+    context.stroke()
+  }
 
   window.requestAnimationFrame(render)
 }
