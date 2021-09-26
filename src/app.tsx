@@ -17,6 +17,7 @@ export function App() {
         `}
       >
         <div
+          data-beacon="a"
           css={css`
             padding: 10vmin;
           `}
@@ -38,6 +39,7 @@ export function App() {
           `}
         >
           <div
+            data-beacon="b"
             css={css`
               width: 100%;
               height: 33vmin;
@@ -55,6 +57,7 @@ export function App() {
           `}
         >
           <div
+            data-beacon={`c${i}`}
             css={css`
               width: 100%;
               height: 33vmin;
