@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 module.exports = <webpack.Configuration>{
   mode: 'development',
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   output: {
     path: __dirname + '/dist',
     filename: 'bundle.js',
