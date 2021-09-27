@@ -5,7 +5,7 @@ module.exports = <webpack.Configuration>{
   mode: 'development',
   entry: './src/index.tsx',
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/docs',
     filename: 'bundle.js',
   },
   resolve: {
